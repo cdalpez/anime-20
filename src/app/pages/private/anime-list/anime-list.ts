@@ -2,10 +2,11 @@ import { Component, computed, OnInit, signal, WritableSignal } from '@angular/co
 import { Anime } from '../../../models/anime.model';
 import { AnimeItem } from './anime-item/anime-item';
 import { AnimeSearch } from "./anime-search/anime-search";
+import { Like } from "../../../shared/components/like/like";
 
 @Component({
   selector: 'app-anime-list',
-  imports: [AnimeItem, AnimeSearch],
+  imports: [AnimeItem, AnimeSearch, Like],
   templateUrl: './anime-list.html',
   styleUrl: './anime-list.css'
 })

@@ -5,8 +5,10 @@
     </div>
 
     <div class="grid grid-cols-4 gap-2 mt-4">
-        @for (item of filteredAnimeList(); track $index) {
-            <app-anime-item></app-anime-item>
+        @for (animeItem of filteredAnimeList(); track $index) {
+            <app-anime-item [anime]="animeItem">
+                <app-like></app-like>
+            </app-anime-item>
         }
     </div>
 </div>
