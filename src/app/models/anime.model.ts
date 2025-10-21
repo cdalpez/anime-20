@@ -1,10 +1,25 @@
-export interface IAnime {
+/* export interface IAnime {
     id: number; 
     title: string; 
     description: string; 
     image: string;
     rank: number;
     genres: [];
+}
+*/
+
+import { Demographic, IAnimeListResponse, IAnimeResponse } from "./anime-response.model";
+import { Pagination } from "./pagination-response.models";
+
+
+export class AnimeList {
+    data: Anime[]; 
+    pagination: Pagination;
+
+    constructor(obj: IAnimeListResponse) {
+        this.data = obj.data.map(anime => new Anime(anime)); 
+        this.pagination = new Pagination(obj.pagination); 
+    }
 }
 
 export class Anime {
@@ -13,16 +28,25 @@ export class Anime {
     description: string; 
     image: string;
     rank: number; 
-    genres: []; 
+    genres: AnimeGenres[]; 
 
-    constructor(obj: IAnime) {
-        this.id = obj.id; 
+    constructor(obj: IAnimeResponse) {
+        this.id = obj.mal_id; 
         this.title = obj.title; 
-        this.description = obj.description; 
-        this.image = obj.image;
+        this.description = obj.synopsis; 
+        this.image = obj.images.webp.image_url;
         this.rank = obj.rank; 
-        this.genres = obj.genres; 
+        this.genres = obj.genres.map(genre => new AnimeGenres(genre)); 
     }
 }
+
+
+export class AnimeGenres {
+    name: string; 
+
+    constructor(obj: Demographic) {
+        this.name = obj.name; 
+    }
+}   
 
 

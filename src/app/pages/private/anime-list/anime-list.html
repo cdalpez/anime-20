@@ -4,7 +4,7 @@
         <app-anime-search (searchQueryEvent)="onSearchQueryEvent($event)"></app-anime-search>
     </div>
 
-    <div class="grid grid-cols-4 gap-2 mt-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 mt-4">
         @for (animeItem of filteredAnimeList(); track $index) {
             <app-anime-item [anime]="animeItem">
                 <app-like></app-like>
