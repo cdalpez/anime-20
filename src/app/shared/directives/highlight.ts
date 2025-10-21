@@ -1,23 +1,27 @@
-import { Directive, HostListener, signal } from '@angular/core';
+import { Directive, HostListener, input, signal } from '@angular/core';
 
 @Directive({
   selector: '[appHighlight]',
   host: {
-    '[style.backgroundColor]' : 'backgroundColor()'
+    '[style.border]' : 'border()'
   }
 })
 export class Highlight {
 
-  backgroundColor = signal<string>(''); 
+  isFavourite = input<boolean>(false);
+  border = signal<string>(''); 
   
   @HostListener('mouseenter')
   onMouseEnter() {
-    this.backgroundColor.set('#ffeb3b'); 
+    /* this.backgroundColor.set('#ffeb3b');  */
+    if (this.isFavourite()) {
+      this.border.set('3px solid #c082f5')
+    }
   }
 
   @HostListener('mouseleave')
   onMouseLeave() {
-    this.backgroundColor.set(''); 
+    this.border.set(''); 
   }
 
   constructor() { }

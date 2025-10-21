@@ -27,16 +27,24 @@ export class Anime {
     title: string; 
     description: string; 
     image: string;
-    rank: number; 
+    score: number; 
     genres: AnimeGenres[]; 
+    startDate: Date;
+    isFavourite: boolean; 
 
     constructor(obj: IAnimeResponse) {
         this.id = obj.mal_id; 
         this.title = obj.title; 
         this.description = obj.synopsis; 
         this.image = obj.images.webp.image_url;
-        this.rank = obj.rank; 
+        this.score = obj.score; 
         this.genres = obj.genres.map(genre => new AnimeGenres(genre)); 
+        this.startDate = new Date(obj.aired.from); 
+        this.isFavourite = false;
+    }
+
+    toggleFavourite() {
+        this.isFavourite = !this.isFavourite; 
     }
 }
 

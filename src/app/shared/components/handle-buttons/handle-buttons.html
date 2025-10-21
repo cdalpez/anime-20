@@ -1,9 +1,11 @@
+@let anime = this.anime();
 <div class="flex gap-2 justify-between mt-3">
     <div class="flex items-center justify-center">
         <p-button *appHasPermission="'admin'" icon="pi pi-trash" [rounded]="true" [text]="true" [raised]="true" severity="danger" aria-label="Delete"/>
     </div>
     <div class="flex items-center justify-center">
         <p-button *appHasPermission="'admin'" icon="pi pi-pencil" [rounded]="true" [text]="true" [raised]="true" severity="info" aria-label="Edit"/>
-        <p-button *appHasPermission="'user'" icon="pi pi-heart" [rounded]="true" [text]="true" [raised]="true" severity="help" aria-label="Like"/>
+        <p-button *appHasPermission="'user'" [icon]="anime.isFavourite ? 'pi pi-heart-fill' : 'pi pi-heart'" (click)="toggleFavourite()"
+        [rounded]="true" [text]="true" [raised]="true" severity="help" aria-label="Like"/>
     </div>
 </div>

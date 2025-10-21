@@ -1,12 +1,12 @@
 @let anime = this.anime(); 
-<p-card [style]="{ overflow: 'hidden' }">
+<p-card [style]="{ overflow: 'hidden' }" [isFavourite]="anime.isFavourite" appHighlight>
     <ng-template #header>
         <img alt="Card" class="w-full" [src]="anime.image" />
     </ng-template>
     <ng-template #title> {{ anime.title }} </ng-template>
-    <ng-template #subtitle> {{ anime.description }} </ng-template>
-    <p class="w-full h-5" appHighlight>
-        Questo testo è in highlight
+    <ng-template #subtitle> {{ anime.description | truncate: 50 }} </ng-template>
+    <p class="w-full h-5">
+        Inizio {{ anime.startDate | date }}
     </p>
     <ng-template #footer>
         <ng-content select="app-handle-buttons"></ng-content>

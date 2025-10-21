@@ -17,7 +17,7 @@ export class HasPermissionDirective implements OnInit {
     admin: ['read', 'edit'],
   }; 
 
-  currentUserRole: 'guest' | 'user' | 'admin' = 'user'; 
+  currentUserRole: 'guest' | 'user' | 'admin' = 'admin'; 
 
   constructor() { 
 
@@ -45,6 +45,7 @@ export class HasPermissionDirective implements OnInit {
     const currentUserPermission = this.userRoles[this.currentUserRole]; 
     const requiredPermission = this.userRoles[requiredRole];  
 
+    
     return requiredPermission.every(permission => currentUserPermission.includes(permission)); 
 
   }

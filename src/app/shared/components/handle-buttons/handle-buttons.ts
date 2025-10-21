@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { HasPermissionDirective } from '../../directives/has-permission';
+import { Anime } from '../../../models/anime.model';
 
 @Component({
   selector: 'app-handle-buttons',
@@ -10,6 +11,12 @@ import { HasPermissionDirective } from '../../directives/has-permission';
 })
 export class HandleButtons {
 
+  anime = input.required<Anime>(); 
+
+
+  toggleFavourite() {
+    this.anime().toggleFavourite(); 
+  }
 
 
 }
