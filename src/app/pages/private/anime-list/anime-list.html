@@ -7,7 +7,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 mt-4">
         @for (animeItem of filteredAnimeList(); track $index) {
             <app-anime-item [anime]="animeItem">
-                <app-like></app-like>
+                <app-handle-buttons></app-handle-buttons>
             </app-anime-item>
         }
     </div>

@@ -5,10 +5,11 @@ import { AnimeSearch } from "./anime-search/anime-search";
 import { Like } from "../../../shared/components/like/like";
 import { AnimeService } from '../../../services/anime-service';
 import { Pagination } from '../../../models/pagination-response.models';
+import { HandleButtons } from '../../../shared/components/handle-buttons/handle-buttons';
 
 @Component({
   selector: 'app-anime-list',
-  imports: [AnimeItem, AnimeSearch, Like],
+  imports: [AnimeItem, AnimeSearch, Like, HandleButtons],
   templateUrl: './anime-list.html',
   styleUrl: './anime-list.css'
 })

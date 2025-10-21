@@ -1,7 +1,7 @@
 @let anime = this.anime(); 
 <p-card [style]="{ overflow: 'hidden' }">
     <ng-template #header>
-        <img alt="Card" class="w-full" src="https://primefaces.org/cdn/primeng/images/card-ng.jpg" />
+        <img alt="Card" class="w-full" [src]="anime.image" />
     </ng-template>
     <ng-template #title> {{ anime.title }} </ng-template>
     <ng-template #subtitle> {{ anime.description }} </ng-template>
@@ -9,6 +9,6 @@
         Questo testo è in highlight
     </p>
     <ng-template #footer>
-        <ng-content select="app-like"></ng-content>
+        <ng-content select="app-handle-buttons"></ng-content>
     </ng-template>
 </p-card>
