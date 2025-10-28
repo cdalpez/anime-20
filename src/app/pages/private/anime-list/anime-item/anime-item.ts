@@ -5,12 +5,12 @@ import { Anime } from '../../../../models/anime.model';
 import { Highlight } from '../../../../shared/directives/highlight';
 import { CommonModule } from '@angular/common';
 import { TruncatePipe } from '../../../../shared/pipes/truncate-pipe';
-import { TestComponent } from "../../../../shared/test-component/test-component";
+/* import { TestComponent } from "../../../../shared/test-component/test-component"; */
 
 
 @Component({
   selector: 'app-anime-item',
-  imports: [CardModule, ButtonModule, Highlight, CommonModule, TruncatePipe, TestComponent],
+  imports: [CardModule, ButtonModule, Highlight, CommonModule, TruncatePipe],
   templateUrl: './anime-item.html',
   styleUrl: './anime-item.css'
 })

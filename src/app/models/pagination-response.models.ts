@@ -17,10 +17,16 @@ export class Pagination {
     total: number; 
     page: number; 
     items: number; 
+    hasNextPage: boolean; 
+    isLoading: boolean; 
+    search: string; 
 
     constructor(obj?: IPaginationResponse) {
         this.total = obj?.items.total?? 0; 
-        this.page = 1; 
+        this.page = 0; 
         this.items = 20; 
+        this.hasNextPage = obj?.has_next_page?? true; 
+        this.isLoading = false;
+        this.search = ''; 
     }
 }

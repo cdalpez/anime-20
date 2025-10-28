@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { Anime } from '../../../models/anime.model';
 import { AnimeItem } from './anime-item/anime-item';
 import { AnimeSearch } from "./anime-search/anime-search";
@@ -6,21 +6,22 @@ import { Like } from "../../../shared/components/like/like";
 import { AnimeService } from '../../../services/anime-service';
 import { Pagination } from '../../../models/pagination-response.models';
 import { HandleButtons } from '../../../shared/components/handle-buttons/handle-buttons';
+import { InfiniteScrollDirective } from '../../../shared/directives/infinite-scroll';
 
 @Component({
   selector: 'app-anime-list',
-  imports: [AnimeItem, AnimeSearch, Like, HandleButtons],
+  imports: [AnimeItem, AnimeSearch, Like, HandleButtons, InfiniteScrollDirective],
   templateUrl: './anime-list.html',
   styleUrl: './anime-list.css'
 })
-export class AnimeList implements OnInit {
-
+export class AnimeList implements OnInit, AfterViewInit {
+  
   private readonly animeService = inject(AnimeService); 
   
   animeList: WritableSignal<Anime[]> = signal<Anime[]>([]);
   querySearch: WritableSignal<string> = signal<string>('');
   
-  pagination: Pagination = new Pagination(); 
+  pagination: WritableSignal<Pagination> = signal<Pagination>(new Pagination()); 
 
   filteredAnimeList = computed(() => {
     const allAnimeList = this.animeList();
@@ -31,19 +32,7 @@ export class AnimeList implements OnInit {
 
   ngOnInit(): void {
 
-    this.animeService.getTopAnime().subscribe({
-      next:(value) => {
-        console.log('Next:', value); 
-        this.animeList.set(value.data); 
-        this.pagination = value.pagination; 
-      }, 
-      error:(err) => {
-        console.log('Error:', err); 
-      }, 
-      complete() {  
-        console.log('Complete'); 
-      }
-    }); 
+    this.loadAnime(); 
 
     /* this.animeList.set([
       {
@@ -81,8 +70,51 @@ export class AnimeList implements OnInit {
     ]);  */
   }
 
+  ngAfterViewInit(): void {
+    window.scrollTo(0, 0); 
+  }
+
+  loadAnime() {
+
+    if (this.pagination().isLoading || !this.pagination().hasNextPage) return; 
+
+    // Aggiorna il signal di pagination
+    this.updatePagination({isLoading: true, page: this.pagination().page + 1}); 
+
+    this.animeService.getTopAnime(this.pagination()).subscribe({
+      next:(value) => {
+        console.log('Next:', value); 
+
+        this.animeList.update((currList) => {
+          return [...currList, ...value.data]; 
+        }); 
+
+        this.updatePagination({
+          isLoading: false,
+          hasNextPage: value.pagination.hasNextPage,
+        }); 
+      }, 
+      error:(err) => {
+        console.log('Error:', err); 
+      }, 
+      complete() {  
+        console.log('Complete'); 
+      }
+    }); 
+  }
+
   onSearchQueryEvent(query:string) {
     console.log('onSearchQueryEvent, ', query); 
     this.querySearch.set(query); 
+  }
+
+  onScrolled() {
+    console.log('onScrolled()'); 
+  }
+
+  private updatePagination(pagination: Partial<Pagination>) {
+    this.pagination.update((currPagination) => {
+      return {...currPagination, ...pagination}
+    }); 
   }
 }

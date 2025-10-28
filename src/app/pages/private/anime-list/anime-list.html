@@ -1,4 +1,6 @@
-<div class="m-auto flex flex-col justify-center w-full h-full bg-surface-100 p-8">
+@let pagination = this.pagination(); 
+<div infiniteScroll [scrollWindow]="true" [infiniteScrollDisable]="!pagination.hasNextPage || pagination.isLoading" (scrolled)="loadAnime()"
+class="m-auto flex flex-col justify-center w-full h-full bg-surface-100 p-8">
 
     <div class="w-full flex justify-center">
         <app-anime-search (searchQueryEvent)="onSearchQueryEvent($event)"></app-anime-search>
