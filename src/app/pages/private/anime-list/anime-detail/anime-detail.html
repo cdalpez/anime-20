@@ -1,0 +1,26 @@
+@let anime = this.anime();
+@if (anime) {
+<div class="h-screen w-full">
+    <div class="grid grid-cols-12">
+
+        <div class="col-span-4">
+            <app-related-anime-list [animeId]="anime.id"></app-related-anime-list>
+        </div>
+
+        <div class="col-span-8">
+            <div class="flex">
+                <div class="">
+                    <img [src]="anime.image" />
+                </div>
+                <div>
+                    <h2>{{anime.title}}</h2>
+                    <p>{{anime.description}}</p>
+                </div>
+            </div>
+            <div class="">
+
+            </div>
+        </div>
+    </div>
+</div>
+}

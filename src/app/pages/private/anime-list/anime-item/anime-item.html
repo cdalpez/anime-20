@@ -1,5 +1,6 @@
 @let anime = this.anime(); 
-<p-card [style]="{ overflow: 'hidden' }" [isFavourite]="anime.isFavourite" appHighlight>
+<p-card class="cursor-pointer" [style]="{ overflow: 'hidden' }" [isFavourite]="anime.isFavourite" 
+    appHighlight (click)="showDetails()">
     <ng-template #header>
         <img alt="Card" class="w-full" [src]="anime.image" />
     </ng-template>

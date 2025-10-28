@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 import { Navbar } from '../../shared/components/navbar/navbar';
-import { AnimeList } from './anime-list/anime-list';
 
 
 @Component({
   selector: 'app-private',
-  imports: [Navbar, AnimeList],
+  imports: [Navbar, RouterOutlet],
   templateUrl: './private.html',
   styleUrl: './private.css'
 })

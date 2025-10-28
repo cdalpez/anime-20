@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { Anime } from '../../../models/anime.model';
 import { AnimeItem } from './anime-item/anime-item';
 import { AnimeSearch } from "./anime-search/anime-search";
@@ -7,14 +7,15 @@ import { AnimeService } from '../../../services/anime-service';
 import { Pagination } from '../../../models/pagination-response.models';
 import { HandleButtons } from '../../../shared/components/handle-buttons/handle-buttons';
 import { InfiniteScrollDirective } from '../../../shared/directives/infinite-scroll';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-anime-list',
-  imports: [AnimeItem, AnimeSearch, Like, HandleButtons, InfiniteScrollDirective],
+  imports: [AnimeItem, AnimeSearch, HandleButtons, InfiniteScrollDirective],
   templateUrl: './anime-list.html',
   styleUrl: './anime-list.css'
 })
-export class AnimeList implements OnInit, AfterViewInit {
+export class AnimeList implements OnInit {
   
   private readonly animeService = inject(AnimeService); 
   
@@ -31,11 +32,7 @@ export class AnimeList implements OnInit, AfterViewInit {
   }); 
 
   ngOnInit(): void {
-    /* window.scrollTo(0, 0);  */
     this.loadAnime(); 
-  }
-
-  ngAfterViewInit(): void {
   }
 
   loadAnime() {

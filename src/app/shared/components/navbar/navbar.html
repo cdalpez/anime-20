@@ -5,7 +5,8 @@
         </svg>
     </ng-template>
     <ng-template #item let-item let-root="root">
-        <a pRipple class="flex items-center p-menubar-item-link">
+        <p pRipple class="flex items-center p-menubar-item-link" 
+        [routerLink]="item.routerLink" [routerLinkActive]="['active']">
             <span>{{ item.label }}</span>
 
             @if (item.badge) {
@@ -20,7 +21,7 @@
                 <i [ngClass]="['ml-auto pi', root ? 'pi-angle-down' : 'pi-angle-right']"></i>
             }     
 
-        </a>
+        </p>
     </ng-template>
     <ng-template #end>
         <div class="flex items-center gap-2">
