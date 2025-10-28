@@ -31,47 +31,11 @@ export class AnimeList implements OnInit, AfterViewInit {
   }); 
 
   ngOnInit(): void {
-
+    /* window.scrollTo(0, 0);  */
     this.loadAnime(); 
-
-    /* this.animeList.set([
-      {
-        id: 1,
-        title: 'Anime Test',
-        description: 'Anime Description',
-        image: '',
-        rank: 0,
-        genres: []
-      },
-      {
-        id: 2,
-        title: 'Anime Numero 2',
-        description: 'Anime Description',
-        image: '',
-        rank: 0,
-        genres: []
-      },
-      {
-        id: 3,
-        title: 'Anime Numero 3',
-        description: 'Anime Description',
-        image: '',
-        rank: 0,
-        genres: []
-      },
-      {
-        id: 4,
-        title: 'Anime Numero 4',
-        description: 'Anime Description',
-        image: '',
-        rank: 0,
-        genres: []
-      }
-    ]);  */
   }
 
   ngAfterViewInit(): void {
-    window.scrollTo(0, 0); 
   }
 
   loadAnime() {
