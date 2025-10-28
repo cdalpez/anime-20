@@ -1,7 +1,7 @@
 import { Component, effect, inject, input, OnInit } from '@angular/core';
 import { AnimeService } from '../../../../services/anime-service';
 import { RelatedAnime } from '../../../../models/relatedAnime.model';
-import { tap } from 'rxjs';
+import { catchError, EMPTY, tap } from 'rxjs';
 
 @Component({
   selector: 'app-related-anime-list',
@@ -19,25 +19,30 @@ export class RelatedAnimeList implements OnInit {
 
   constructor() {
     effect(() => {
-      const id = this.animeId(); 
+      /* const id = this.animeId(); 
       if (id) {
         this.animeService.getAnimeRelated(id).pipe(
-          tap((relAnimeRes) => this.relatedAnime.push(...relAnimeRes))
+          tap((relAnimeRes) => this.relatedAnime.push(...relAnimeRes)),
+          catchError((err) => {
+            console.log('getAnimeRelated.err', err); 
+            return EMPTY; 
+          })
         ).subscribe();
-      }
+      } */
     })
   }
 
   ngOnInit(): void {
 
-    
-
-    setTimeout(() => {
-      /* console.log('animeId', this.animeId()); 
-      this.animeService.getAnimeRelated(this.animeId()).pipe(
-        tap((relAnimeRes) => this.relatedAnime.push(...relAnimeRes))
-      ).subscribe();  */
-    }, 1000);
-    
+    const id = this.animeId(); 
+      if (id) {
+        this.animeService.getAnimeRelated(id).pipe(
+          tap((relAnimeRes) => this.relatedAnime = relAnimeRes),
+          catchError((err) => {
+            console.log('getAnimeRelated.err', err); 
+            return EMPTY; 
+          })
+        ).subscribe();
+      } 
   }
 }
