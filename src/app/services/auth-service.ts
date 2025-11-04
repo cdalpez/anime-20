@@ -1,7 +1,7 @@
 import { IToken } from './../models/token.model';
 import { computed, Injectable, signal } from '@angular/core';
 import { IUserCredentials } from '../models/user.model';
-import { debounceTime, map, of } from 'rxjs';
+import { debounce, debounceTime, delay, map, of, timer } from 'rxjs';
 import { Token } from '../models/token.model';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class AuthService {
 
   login(credentials: IUserCredentials) {
     return of(credentials).pipe(
-      debounceTime(1500),
+      delay(1500),
       map(() => {
         return {
           accessToken: 'lbrjbvlkrvnprqvnrqpjixmqiobgqpimgxbqpgupqxrgbpqxugp5qugqjpgjqnpg',
@@ -22,7 +22,8 @@ export class AuthService {
         } as IToken
       }),
       map((token) => {
-        this.token.set( new Token(token));
+        this.token.set(new Token(token));
+        return token; 
       })
     );
   }
