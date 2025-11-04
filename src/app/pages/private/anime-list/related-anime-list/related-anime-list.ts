@@ -1,4 +1,5 @@
-import { Component, effect, inject, input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Component, effect, inject, input, OnInit, signal, WritableSignal } from '@angular/core';
 import { AnimeService } from '../../../../services/anime-service';
 import { RelatedAnime } from '../../../../models/relatedAnime.model';
 import { catchError, EMPTY, tap } from 'rxjs';
@@ -14,8 +15,11 @@ export class RelatedAnimeList implements OnInit {
   // Input è sempre richiesto
   animeId = input<number>();
   private readonly animeService = inject(AnimeService); 
+  private readonly routerService = inject(Router); 
+  private readonly activatedRoute = inject(ActivatedRoute); 
 
-  relatedAnime: RelatedAnime[] = []; 
+/*   relatedAnime: RelatedAnime[] = [];  */
+  relatedAnime: WritableSignal<RelatedAnime[]> = signal<RelatedAnime[]>([]);
 
   constructor() {
     effect(() => {
@@ -37,12 +41,17 @@ export class RelatedAnimeList implements OnInit {
     const id = this.animeId(); 
       if (id) {
         this.animeService.getAnimeRelated(id).pipe(
-          tap((relAnimeRes) => this.relatedAnime = relAnimeRes),
+          tap((relAnimeRes) => this.relatedAnime.set(relAnimeRes)),
           catchError((err) => {
             console.log('getAnimeRelated.err', err); 
             return EMPTY; 
           })
         ).subscribe();
       } 
+  }
+
+
+  onAnimeSelect(animeId: number) {
+    this.routerService.navigate(['..', animeId], {relativeTo: this.activatedRoute}); 
   }
 }
