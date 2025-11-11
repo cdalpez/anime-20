@@ -1,6 +1,58 @@
 <div class="w-full h-screen flex justify-center bg-green-300">
-    <div class="w-2/3 flex flex-col justify-center items-center h-full gap-4">
-        <p-button (click)="onLogin()" [loading]="isLoading()">Accedi</p-button>
-        <p-button (click)="onRegister()">Registrati</p-button>
-    </div>
+  <div class="w-2/3 flex flex-col justify-center items-center h-full gap-4">
+    <p-card header="Login">
+      <form #loginForm="ngForm" (ngSubmit)="onLogin()">
+        <div class="m-2 flex flex-col gap-3">
+          <p-floatlabel variant="on">
+            <input
+              pInputText
+              id="on_label"
+              name="username"
+              [(ngModel)]="userCredentials.username"
+              autocomplete="off"
+              required
+              minlength="4"
+              #usernameInput="ngModel"
+            />
+            <label for="on_label">Username</label>
+          </p-floatlabel>
+          @let usernameErrors = usernameInput.errors; @if(usernameErrors && usernameInput.touched) {
+          @if(usernameErrors['required']) {
+          <small class="text-red-500">Username è obbligatorio</small>
+          } @let requiredLength = usernameErrors?.['minlength']?.['requiredLength']; @let
+          actualLength = usernameErrors?.['minlength']?.['actualLength']; @if(requiredLength &&
+          actualLength && requiredLength > actualLength) {
+          <small class="text-red-500">Username deve essere lungo almeno 4 caratteri</small>
+          } }
+          <p-floatlabel variant="on">
+            <input
+              pInputText
+              type="password"
+              id="password"
+              name="password"
+              [(ngModel)]="userCredentials.password"
+              autocomplete="off"
+              required
+              #passwordInput="ngModel"
+            />
+            <label for="on_label">Password</label>
+          </p-floatlabel>
+          @let passwordErrors = passwordInput.errors; @if(passwordErrors && passwordInput.touched) {
+          @if(passwordErrors['required']) {
+          <small class="text-red-500">password è obbligatorio</small>
+          } }
+        </div>
+        <div class="flex justify-center gap-3">
+          <p-button type="button" (click)="onRegister()">Registrati</p-button>
+          <p-button type="submit" [loading]="isLoading()">Accedi</p-button>
+        </div>
+      </form>
+    </p-card>
+    {{ loginForm.value | json }}
+    <p>Valido: {{ loginForm.valid }}</p>
+    <p>errors: {{ loginForm.errors | json }}</p>
+    <p>error username: {{ usernameInput.errors | json }}</p>
+  </div>
 </div>
+
+<p-toast />

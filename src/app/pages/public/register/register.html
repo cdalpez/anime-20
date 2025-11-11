@@ -1,3 +1,54 @@
 <div class="h-screen w-full flex justify-center items-center">
-  <p-button (click)="onSubmitForm()" [loading]="isLoading()">TEST</p-button>
+  <p-card header="Registrati">
+    <form [formGroup]="form" (ngSubmit)="onSubmitForm()">
+      <div class="m-2 flex flex-col gap-3">
+        <p-floatlabel variant="on">
+          <input pInputText id="on_label" autocomplete="off" formControlName="username" />
+          <label for="on_label">Username</label>
+        </p-floatlabel>
+        <!-- @if(usernameCtrl.errors) { @let required = usernameCtrl.errors['required']; @if(required) {
+        <small class="text-red-500">Username è obbligatorio</small>
+        } @let usernameNotAvailable = usernameCtrl.errors['usernameNotAvailable'];
+        @if(usernameNotAvailable) {
+        <small class="text-red-500">l'username {{ usernameCtrl.value }} è già utilizzato</small>
+        } } -->
+
+        @if(usernamePending()) {
+        <small> {{ usernamePending() }}</small>
+        } @if(usernameError()) {
+        <small> {{ usernameError() }}</small>
+        }
+
+        <p-floatlabel variant="on">
+          <p-password
+            id="on_label"
+            [toggleMask]="true"
+            [feedback]="false"
+            formControlName="password"
+          />
+
+          <label for="on_label">Password</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <p-password
+            id="on_label"
+            [toggleMask]="true"
+            [feedback]="false"
+            formControlName="confirmPassword"
+          />
+          <label for="on_label">Confirm Password</label>
+        </p-floatlabel>
+        @if(confirmPasswordError()) {
+        <small> {{ confirmPasswordError() }}</small>
+        }
+      </div>
+      <div class="flex justify-center gap-3">
+        <p-button type="submit" [loading]="isLoading()" [disabled]="form.invalid"
+          >Registrati</p-button
+        >
+      </div>
+      pending: {{ status() }}
+    </form>
+  </p-card>
 </div>
