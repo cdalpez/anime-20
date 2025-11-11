@@ -1,15 +1,26 @@
-@let anime = this.anime(); 
-<p-card class="cursor-pointer" [style]="{ overflow: 'hidden' }" [isFavourite]="anime.isFavourite" 
-    appHighlight (click)="showDetails()">
-    <ng-template #header>
-        <img alt="Card" class="w-full" [src]="anime.image" />
-    </ng-template>
-    <ng-template #title> {{ anime.title }} </ng-template>
-    <ng-template #subtitle> {{ anime.description | truncate: 50 }} </ng-template>
-    <p class="w-full h-5">
-        Inizio {{ anime.startDate | date }}
-    </p>
-    <ng-template #footer>
-        <ng-content select="app-handle-buttons"></ng-content>
-    </ng-template>
+@let anime = this.anime();
+<p-card
+  class="cursor-pointer"
+  [style]="{ overflow: 'hidden' }"
+  [isFavourite]="anime.isFavourite"
+  appHighlight
+  (click)="showDetails()"
+>
+  <ng-template #header>
+    <div class="relative">
+      <img alt="Card" class="w-full" [src]="anime.image" />
+      @if(anime.isLoadingDetail){
+
+      <div class="absolute w-full top-0 bottom-0 flex justify-center items-center">
+        <p-progress-spinner ariaLabel="loading" />
+      </div>
+      }
+    </div>
+  </ng-template>
+  <ng-template #title> {{ anime.title }} </ng-template>
+  <ng-template #subtitle> {{ anime.description | truncate : 50 }} </ng-template>
+  <p class="w-full h-5">Inizio {{ anime.startDate | date }}</p>
+  <ng-template #footer>
+    <ng-content select="app-handle-buttons"></ng-content>
+  </ng-template>
 </p-card>

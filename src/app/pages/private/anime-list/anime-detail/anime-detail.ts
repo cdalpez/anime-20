@@ -9,36 +9,50 @@ import { RelatedAnimeList } from '../related-anime-list/related-anime-list';
   selector: 'app-anime-detail',
   imports: [RelatedAnimeList],
   templateUrl: './anime-detail.html',
-  styleUrl: './anime-detail.css'
+  styleUrl: './anime-detail.css',
 })
 export class AnimeDetail implements OnInit, OnDestroy {
+  private destroy$: Subject<void> = new Subject<void>();
 
-  private destroy$: Subject<void> = new Subject<void>(); 
-  
   private activatedRoute = inject(ActivatedRoute);
-  private readonly animeService = inject(AnimeService); 
+  private readonly animeService = inject(AnimeService);
 
   anime: WritableSignal<Anime | null> = signal<Anime | null>(null);
 
   ngOnInit(): void {
+    this.activatedRoute.data
+      .pipe(
+        map((dataParamas) => dataParamas['detailAnime']),
+        tap((detailAnime: Anime | null) => {
+          if (detailAnime) {
+            this.anime.set(detailAnime);
+          }
+        })
+      )
+      .subscribe();
 
-   /* const params = this.activatedRoute.snapshot.params;  */
-   this.activatedRoute.params.pipe(
-    map((params) => params['id']),
-    switchMap((id) => 
-      iif(() => id, this.animeService.getAnimeById(id).pipe(
-        tap((animeRes) => { this.anime.set(animeRes)})
-      ), 
-      EMPTY
-    )
-    ),
-    takeUntil(this.destroy$)
-   ).subscribe(); 
+    /* const params = this.activatedRoute.snapshot.params;  */
+    // this.activatedRoute.params
+    //   .pipe(
+    //     map((params) => params['id']),
+    //     switchMap((id) =>
+    //       iif(
+    //         () => id,
+    //         this.animeService.getAnimeById(id).pipe(
+    //           tap((animeRes) => {
+    //             this.anime.set(animeRes);
+    //           })
+    //         ),
+    //         EMPTY
+    //       )
+    //     ),
+    //     takeUntil(this.destroy$)
+    //   )
+    //   .subscribe();
   }
 
   ngOnDestroy(): void {
     this.destroy$.next();
-    this.destroy$.complete(); 
+    this.destroy$.complete();
   }
-
 }

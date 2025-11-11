@@ -19,8 +19,6 @@ export class AuthService {
     const user: User | null = this.userService.currentUser();
     const token: Token | null = this.currentToken();
 
-    console.log('isAuthenticated', user, token);
-
     return user !== null && token !== null;
   });
 

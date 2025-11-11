@@ -8,50 +8,49 @@ import { catchError, EMPTY, tap } from 'rxjs';
   selector: 'app-related-anime-list',
   imports: [],
   templateUrl: './related-anime-list.html',
-  styleUrl: './related-anime-list.css'
+  styleUrl: './related-anime-list.css',
 })
 export class RelatedAnimeList implements OnInit {
-
   // Input è sempre richiesto
   animeId = input<number>();
-  private readonly animeService = inject(AnimeService); 
-  private readonly routerService = inject(Router); 
-  private readonly activatedRoute = inject(ActivatedRoute); 
+  private readonly animeService = inject(AnimeService);
+  private readonly routerService = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
-/*   relatedAnime: RelatedAnime[] = [];  */
+  /*   relatedAnime: RelatedAnime[] = [];  */
   relatedAnime: WritableSignal<RelatedAnime[]> = signal<RelatedAnime[]>([]);
 
   constructor() {
     effect(() => {
-      /* const id = this.animeId(); 
+      /* const id = this.animeId();
       if (id) {
         this.animeService.getAnimeRelated(id).pipe(
           tap((relAnimeRes) => this.relatedAnime.push(...relAnimeRes)),
           catchError((err) => {
-            console.log('getAnimeRelated.err', err); 
-            return EMPTY; 
+            console.log('getAnimeRelated.err', err);
+            return EMPTY;
           })
         ).subscribe();
       } */
-    })
+    });
   }
 
   ngOnInit(): void {
-
-    const id = this.animeId(); 
-      if (id) {
-        this.animeService.getAnimeRelated(id).pipe(
+    const id = this.animeId();
+    if (id) {
+      this.animeService
+        .getAnimeRelated(id)
+        .pipe(
           tap((relAnimeRes) => this.relatedAnime.set(relAnimeRes)),
           catchError((err) => {
-            console.log('getAnimeRelated.err', err); 
-            return EMPTY; 
+            return EMPTY;
           })
-        ).subscribe();
-      } 
+        )
+        .subscribe();
+    }
   }
 
-
   onAnimeSelect(animeId: number) {
-    this.routerService.navigate(['..', animeId], {relativeTo: this.activatedRoute}); 
+    this.routerService.navigate(['..', animeId], { relativeTo: this.activatedRoute });
   }
 }
