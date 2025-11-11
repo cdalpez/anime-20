@@ -47,6 +47,11 @@ export class Navbar implements OnDestroy {
         routerLink: '/private/home',
         icon: 'pi pi-home',
       },
+      {
+        label: 'Form Signal',
+        routerLink: '/private/form-signal',
+        icon: 'pi pi-home',
+      },
     ];
   }
 

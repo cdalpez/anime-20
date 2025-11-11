@@ -1,0 +1,48 @@
+<div class="h-screen w-full flex flex-col justify-center items-center">
+  <p-card header="Form Signal">
+    <form>
+      <div class="m-2 flex flex-col gap-3">
+        <p-floatlabel variant="on">
+          <input pInputText id="on_label" autocomplete="off" [field]="userForm.username" />
+          <label for="on_label">Username</label>
+        </p-floatlabel>
+
+        @if(userForm.username().touched() || userForm.username().invalid()) { @for(error of
+        userForm.username().errors(); track $index) {
+        <small class="text-red-500">{{ error.message }}</small>
+        } }
+
+        <p-floatlabel variant="on">
+          <p-password
+            id="on_label"
+            [toggleMask]="true"
+            [feedback]="false"
+            [field]="userForm.password"
+          />
+
+          <label for="on_label">Password</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="on">
+          <p-password
+            id="on_label"
+            [toggleMask]="true"
+            [feedback]="false"
+            [field]="userForm.confirmPassword"
+          />
+          <label for="on_label">Confirm Password</label>
+        </p-floatlabel>
+        @if(confirmPasswordError()) {
+        <small class="text-red-500">{{ confirmPasswordError() }}</small>
+        }
+      </div>
+      <div class="flex justify-center gap-3">
+        <p-button type="submit" (click)="onSubmit()">Conferma</p-button>
+      </div>
+    </form>
+
+    <pre>
+      {{ userForm().value() | json }}
+    </pre>
+  </p-card>
+</div>
